@@ -8,15 +8,10 @@ import HomePage from "./pages/Home";
 import AboutPage from "./pages/About";
 import CoursesPage from "./pages/Courses";
 import MainLayout from "./layouts/MainLayout";
+import HelpLayout from "./layouts/HelpLayout";
+import FaqPage from "./pages/help/FaqPage";
+import ContactPage from "./pages/help/ContactPage";
 
-const routes_1 = createRoutesFromElements(
-  <Route>
-    <Route path="/" element={<HomePage />} />
-    <Route path="/home" element={<HomePage />} />
-    <Route path="/about" element={<AboutPage />} />
-    <Route path="/courses" element={<CoursesPage />} />
-  </Route>
-);
 
 const routes = [
   {
@@ -27,6 +22,14 @@ const routes = [
       { path: "home", element: <HomePage /> },
       { path: "about", element: <AboutPage /> },
       { path: "courses", element: <CoursesPage /> },
+      {
+        path: "help",
+        element: <HelpLayout/>,
+        children: [
+          { path: "contact", element: <ContactPage/>},
+          { path: "faq", element: <FaqPage/>}
+        ]
+      }
     ],
   },
 ];
