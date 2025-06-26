@@ -6,7 +6,7 @@ import {
 } from "react-router";
 import HomePage from "./pages/Home";
 import AboutPage from "./pages/About";
-import CoursesPage from "./pages/Courses";
+import CoursesPage, { coursesLoader } from "./pages/Courses";
 import MainLayout from "./layouts/MainLayout";
 import HelpLayout from "./layouts/HelpLayout";
 import FaqPage from "./pages/help/FaqPage";
@@ -21,7 +21,7 @@ const routes = [
       { index: true, element: <HomePage /> },
       { path: "home", element: <HomePage /> },
       { path: "about", element: <AboutPage /> },
-      { path: "courses", element: <CoursesPage /> },
+      { path: "courses", element: <CoursesPage />, loader: coursesLoader },
       {
         path: "help",
         element: <HelpLayout/>,

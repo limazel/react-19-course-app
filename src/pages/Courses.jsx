@@ -1,17 +1,27 @@
+import { useLoaderData } from "react-router";
 
-
-export default function CoursesPage()
-{
+export default function CoursesPage() {
+  const courses = useLoaderData();
   return (
     <>
+      <h1>Courses Page</h1>
       <div id="courses">
-        <h1>Courses Page</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam,
-        doloremque placeat ipsum excepturi quibusdam beatae ab nesciunt sapiente
-        accusamus porro!
-      </p>
+        {courses.map((item) => (
+          <div key={item.id} className="card">
+            <img src={`http://localhost:50000/images/${item.image}`} alt="" />
+            <div className="">
+              <h4>{item.title}</h4>
+              <p>{item.description}</p>
+              <a href="$">Detay</a>
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );
+}
+
+export async function coursesLoader() {
+  const res = await fetch("http://localhost:50000/courses");
+  return res.json();
 }
