@@ -11,6 +11,7 @@ import MainLayout from "./layouts/MainLayout";
 import HelpLayout from "./layouts/HelpLayout";
 import FaqPage from "./pages/help/FaqPage";
 import ContactPage from "./pages/help/ContactPage";
+import CourseDetailsPage, { courseDetailsLoader } from "./pages/CourseDetailsPage";
 
 
 const routes = [
@@ -22,6 +23,7 @@ const routes = [
       { path: "home", element: <HomePage /> },
       { path: "about", element: <AboutPage /> },
       { path: "courses", element: <CoursesPage />, loader: coursesLoader },
+      { path: "courses/:courseid", element: <CourseDetailsPage/>, loader: courseDetailsLoader},
       {
         path: "help",
         element: <HelpLayout/>,
