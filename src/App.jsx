@@ -1,7 +1,5 @@
 import {
   createBrowserRouter,
-  createRoutesFromElements,
-  Route,
   RouterProvider,
 } from "react-router";
 import HomePage from "./pages/Home";
@@ -9,10 +7,12 @@ import AboutPage from "./pages/About";
 import CoursesPage, { coursesLoader } from "./pages/Courses";
 import MainLayout from "./layouts/MainLayout";
 import HelpLayout from "./layouts/HelpLayout";
-import FaqPage from "./pages/help/FaqPage";
-import ContactPage from "./pages/help/ContactPage";
-import CourseDetailsPage, { courseDetailsLoader } from "./pages/CourseDetailsPage";
-
+import FaqPage from "./pages/help/Faq";
+import ContactPage from "./pages/help/Contact";
+import CourseDetailsPage, {
+  courseDetailsLoader,
+} from "./pages/CourseDetailsPage";
+import CourseLayout from "./layouts/CourseLayout";
 
 const routes = [
   {
@@ -22,16 +22,26 @@ const routes = [
       { index: true, element: <HomePage /> },
       { path: "home", element: <HomePage /> },
       { path: "about", element: <AboutPage /> },
-      { path: "courses", element: <CoursesPage />, loader: coursesLoader },
-      { path: "courses/:courseid", element: <CourseDetailsPage/>, loader: courseDetailsLoader},
+      {
+        path: "courses",
+        element: <CourseLayout/>,
+        children: [
+          { index: true, element: <CoursesPage />, loader: coursesLoader },
+          {
+            path: ":courseid",
+            element: <CourseDetailsPage />,
+            loader: courseDetailsLoader,
+          },
+        ],
+      },
       {
         path: "help",
-        element: <HelpLayout/>,
+        element: <HelpLayout />,
         children: [
-          { path: "contact", element: <ContactPage/>},
-          { path: "faq", element: <FaqPage/>}
-        ]
-      }
+          { path: "contact", element: <ContactPage /> },
+          { path: "faq", element: <FaqPage /> },
+        ],
+      },
     ],
   },
 ];

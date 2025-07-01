@@ -4,7 +4,26 @@ export default function CourseDetailsPage() {
   const course = useLoaderData();
   return (
     <>
-      <h1>Course Details: {course.title} </h1>
+      <div className="course-details">
+        <h1>{course.title}</h1>
+        <div className="course-desc">
+          <img src={`http://localhost:50000/images/${course.image}`} alt="" />
+          <div className="">
+            <div className="">{course.description}</div>
+          <div className="icons">
+            <span>
+              <i className="fa-regular fa-user"></i> {course.users}
+            </span>
+            <span>
+              <i className="fa-regular fa-thumbs-up"></i> {course.likes}
+            </span>
+            <span>
+              <i className="fa-regular fa-comment"></i> {course.comments}
+            </span>
+          </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
