@@ -1,18 +1,17 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import HomePage from "./pages/Home";
 import AboutPage from "./pages/About";
-import CoursesPage, { coursesLoader } from "./pages/Courses";
+import CoursesPage, { coursesLoader } from "./pages/course/Courses";
 import MainLayout from "./layouts/MainLayout";
 import HelpLayout from "./layouts/HelpLayout";
 import FaqPage from "./pages/help/Faq";
 import ContactPage from "./pages/help/Contact";
 import CourseDetailsPage, {
   courseDetailsLoader,
-} from "./pages/CourseDetailsPage";
+} from "./pages/course/CourseDetailsPage";
 import CourseLayout from "./layouts/CourseLayout";
+import CourseCreatePage, { courseAction } from "./pages/course/CourseCreatePage";
+import CourseEditPage from "./pages/course/CourseEditPage";
 
 const routes = [
   {
@@ -24,14 +23,23 @@ const routes = [
       { path: "about", element: <AboutPage /> },
       {
         path: "courses",
-        element: <CourseLayout/>,
+        element: <CourseLayout />,
         children: [
           { index: true, element: <CoursesPage />, loader: coursesLoader },
           {
+            id: "course-details",
             path: ":courseid",
-            element: <CourseDetailsPage />,
             loader: courseDetailsLoader,
+            children: [
+              {
+                index: true,
+                element: <CourseDetailsPage />,
+                loader: courseDetailsLoader,
+              },
+              { path: "edit", element: <CourseEditPage /> },
+            ],
           },
+          { path: "create", element: <CourseCreatePage />, action: courseAction },
         ],
       },
       {
