@@ -5,7 +5,7 @@ export default function CourseEditPage() {
   const course = useRouteLoaderData("course-details");
   return (
     <>
-      <CourseForm data={course} />
+      <CourseForm method="PUT" data={course} />
     </>
   );
 }

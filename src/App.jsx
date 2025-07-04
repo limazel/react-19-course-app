@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import HomePage from "./pages/Home";
 import AboutPage from "./pages/About";
-import CoursesPage, { coursesLoader } from "./pages/course/Courses";
+import CoursesPage, { courseDeleteAction, coursesLoader } from "./pages/course/Courses";
 import MainLayout from "./layouts/MainLayout";
 import HelpLayout from "./layouts/HelpLayout";
 import FaqPage from "./pages/help/Faq";
@@ -10,8 +10,9 @@ import CourseDetailsPage, {
   courseDetailsLoader,
 } from "./pages/course/CourseDetailsPage";
 import CourseLayout from "./layouts/CourseLayout";
-import CourseCreatePage, { courseAction } from "./pages/course/CourseCreatePage";
+import CourseCreatePage from "./pages/course/CourseCreatePage";
 import CourseEditPage from "./pages/course/CourseEditPage";
+import { courseAction } from "./pages/course/CourseForm";
 
 const routes = [
   {
@@ -36,10 +37,22 @@ const routes = [
                 element: <CourseDetailsPage />,
                 loader: courseDetailsLoader,
               },
-              { path: "edit", element: <CourseEditPage /> },
+              {
+                path: "edit",
+                element: <CourseEditPage />,
+                action: courseAction,
+              },
+              {
+                path: "delete",
+                action: courseDeleteAction
+              },
             ],
           },
-          { path: "create", element: <CourseCreatePage />, action: courseAction },
+          {
+            path: "create",
+            element: <CourseCreatePage />,
+            action: courseAction,
+          },
         ],
       },
       {
