@@ -5,10 +5,19 @@ import { isValidImage, isRequiredCheck } from "../../utils/validations";
 export default function CourseForm({ method, data }) {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
-  const errors = useActionData();
+  const result = useActionData();
 
   return (
     <Form method={method}>
+      {result && result.errors && (
+        <ul className="errors">
+          {
+            Object.values(result.errors).map((err) => (
+              <li key={err}>{err}</li>
+            ))
+          }
+        </ul>
+      )}
       <div className="">
         <label htmlFor="title">Title:</label>
         <input
@@ -17,7 +26,7 @@ export default function CourseForm({ method, data }) {
           id="title"
           defaultValue={data ? data.title : ""}
         />
-        {errors && errors.title && <p>{errors.title}</p>}
+        {result && result.title && <p>{result.title}</p>}
       </div>
       <div className="">
         <label htmlFor="image">Image:</label>
@@ -27,7 +36,7 @@ export default function CourseForm({ method, data }) {
           id="image"
           defaultValue={data ? data.image : ""}
         />
-        {errors && errors.image && <p>{errors.image}</p>}
+        {result && result.image && <p>{result.image}</p>}
       </div>
       <div className="">
         <label htmlFor="description">Description:</label>
@@ -37,7 +46,7 @@ export default function CourseForm({ method, data }) {
           rows={5}
           defaultValue={data ? data.description : ""}
         ></textarea>
-        {errors && errors.description && <p>{errors.description}</p>}
+        {result && result.description && <p>{result.description}</p>}
 
       </div>
       <button disabled={isSubmitting} type="submit">
@@ -66,20 +75,19 @@ export async function courseAction({ request, params }) {
 
   const errors = {};
 
-  if (!isRequiredCheck(formData.title)) {
-    errors.title = "Title alanı zorunlu";
-  };
+  // if (!isRequiredCheck(formData.title)) {
+  //   errors.title = "Title alanı zorunlu";
+  // };
 
-  if (!isRequiredCheck(formData.description)) {
-    errors.description = "Description alanı zorunlu";
-  };
+  // if (!isRequiredCheck(formData.description)) {
+  //   errors.description = "Description alanı zorunlu";
+  // };
 
-  if (!isValidImage(formData.image)) {
-    errors.image = "Image alanı zorunlu ve .jpg, .jpeg, .png olmak zorunda";
-  }
+  // if (!isValidImage(formData.image)) {
+  //   errors.image = "Image alanı zorunlu ve .jpg, .jpeg, .png olmak zorunda";
+  // }
 
   if(Object.keys(errors).length) {
-    console.log(errors);
     return errors;
   }
 
@@ -88,6 +96,10 @@ export async function courseAction({ request, params }) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(formData),
   });
+
+  if(response.status === 403) {
+    return response;
+  }
 
   if (response.ok) {
     return redirect("/courses");

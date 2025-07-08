@@ -1,7 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import HomePage from "./pages/Home";
 import AboutPage from "./pages/About";
-import CoursesPage, { courseDeleteAction, coursesLoader } from "./pages/course/Courses";
+import CoursesPage, {
+  courseDeleteAction,
+  coursesLoader,
+} from "./pages/course/Courses";
 import MainLayout from "./layouts/MainLayout";
 import HelpLayout from "./layouts/HelpLayout";
 import FaqPage from "./pages/help/Faq";
@@ -13,6 +16,7 @@ import CourseLayout from "./layouts/CourseLayout";
 import CourseCreatePage from "./pages/course/CourseCreatePage";
 import CourseEditPage from "./pages/course/CourseEditPage";
 import { courseAction } from "./pages/course/CourseForm";
+import NotFoundPage from "./pages/error/NotFoundPage";
 
 const routes = [
   {
@@ -44,7 +48,7 @@ const routes = [
               },
               {
                 path: "delete",
-                action: courseDeleteAction
+                action: courseDeleteAction,
               },
             ],
           },
@@ -63,6 +67,10 @@ const routes = [
           { path: "faq", element: <FaqPage /> },
         ],
       },
+      {
+        path: "*",
+        element: <NotFoundPage/>,
+      }
     ],
   },
 ];
