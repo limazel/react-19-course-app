@@ -17,6 +17,7 @@ import CourseCreatePage from "./pages/course/CourseCreatePage";
 import CourseEditPage from "./pages/course/CourseEditPage";
 import { courseAction } from "./pages/course/CourseForm";
 import NotFoundPage from "./pages/error/NotFoundPage";
+import ErrorPage from "./pages/error/ErrorPage";
 
 const routes = [
   {
@@ -29,6 +30,7 @@ const routes = [
       {
         path: "courses",
         element: <CourseLayout />,
+        errorElement: <ErrorPage />,
         children: [
           { index: true, element: <CoursesPage />, loader: coursesLoader },
           {
@@ -69,8 +71,8 @@ const routes = [
       },
       {
         path: "*",
-        element: <NotFoundPage/>,
-      }
+        element: <NotFoundPage />,
+      },
     ],
   },
 ];

@@ -10,17 +10,17 @@ export default function CourseDetailsPage() {
           <img src={`http://localhost:50000/images/${course.image}`} alt="" />
           <div className="">
             <div className="">{course.description}</div>
-          <div className="icons">
-            <span>
-              <i className="fa-regular fa-user"></i> {course.users}
-            </span>
-            <span>
-              <i className="fa-regular fa-thumbs-up"></i> {course.likes}
-            </span>
-            <span>
-              <i className="fa-regular fa-comment"></i> {course.comments}
-            </span>
-          </div>
+            <div className="icons">
+              <span>
+                <i className="fa-regular fa-user"></i> {course.users}
+              </span>
+              <span>
+                <i className="fa-regular fa-thumbs-up"></i> {course.likes}
+              </span>
+              <span>
+                <i className="fa-regular fa-comment"></i> {course.comments}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -28,8 +28,12 @@ export default function CourseDetailsPage() {
   );
 }
 
-export async function courseDetailsLoader({params}) {
-  const {courseid} = params;
+export async function courseDetailsLoader({ params }) {
+  const { courseid } = params;
   const res = await fetch("http://localhost:50000/courses/" + courseid);
+
+  if (!res.ok) {
+    throw new Response("Kurs bulunamadı", { status: 404 });
+  }
   return res.json();
 }
